@@ -73,7 +73,7 @@ VITE_HF_TOKEN=hf_your-huggingface-token-here
 - Go to [platform.openai.com/api-keys](https://platform.openai.com/api-keys)
 - Sign up/login to OpenAI
 - Create a new API key
-- Copy the key (starts with `sk-proj-`)
+- Copy the key (starts with `sk-proj-...`)
 
 ### Anthropic API Key
 - Go to [console.anthropic.com](https://console.anthropic.com/)

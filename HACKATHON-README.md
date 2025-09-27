@@ -299,7 +299,7 @@ MIT License - see LICENSE file for details
 - **GitHub**: [Repository URL]
 - **Demo**: [Live Demo URL]
 - **Video**: [Demo Video URL]
-- **Email**: [Contact: abdulkabir0600@gmail.com]
+- **Email**: [Contact Email]
 
 ## 🙏 Acknowledgments
 
