@@ -165,7 +165,7 @@ Keep response concise and professional.`;
 
       let aiAnalysis: string;
       
-      if (this.config.llmProvider === 'deepseek' && this.config.apiKey) {
+      if (this.config.llmProvider === 'huggingface' && this.config.apiKey) {
         console.log('🔑 Using DeepSeek API for ElizaOS');
         const response = await fetch(`${this.config.baseUrl}/chat/completions`, {
           method: 'POST',
@@ -191,7 +191,7 @@ Keep response concise and professional.`;
 
         const data = await response.json();
         aiAnalysis = data.choices[0]?.message?.content || 'AI analysis completed successfully.';
-      } else if (this.config.llmProvider === 'openai' && this.config.apiKey) {
+      } else if (this.config.llmProvider === 'huggingface' && this.config.apiKey) {
         console.log('🔑 Using OpenAI API for ElizaOS');
         const response = await fetch(`${this.config.baseUrl}/chat/completions`, {
           method: 'POST',

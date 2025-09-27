@@ -22,7 +22,7 @@ import zyraLogo from '../assets/zyra-logo.png';
 const Dashboard: React.FC = () => {
   const navigate = useNavigate();
   const { isConnected, connect, loading: walletLoading, error: walletError } = useWalletStore();
-  const { proposals, fetchProposals, loading: proposalsLoading } = useProposalStore();
+  const { proposals, fetchProposals } = useProposalStore();
   const { totalValue: treasuryValue, fetchTreasurySummary, loading: treasuryLoading } = useTreasuryStore();
   
   const [stats, setStats] = useState({
@@ -75,7 +75,7 @@ const Dashboard: React.FC = () => {
   // Update stats when data changes
   useEffect(() => {
     const activeProposals = proposals.filter(p => p.status === 'active').length;
-    const completedProposals = proposals.filter(p => p.status === 'executed').length;
+    // const completedProposals = proposals.filter(p => p.status === 'executed').length;
     
     // Calculate monthly spending from treasury transactions (approximate)
     const monthlySpending = treasuryValue * 0.08; // 8% of treasury as monthly spending estimate
@@ -132,9 +132,9 @@ const Dashboard: React.FC = () => {
     navigate('/treasury');
   };
 
-  const handleViewAllActivity = () => {
-    navigate('/proposals');
-  };
+  // const handleViewAllActivity = () => {
+  //   navigate('/proposals');
+  // };
 
   const containerVariants = {
     hidden: { opacity: 0 },

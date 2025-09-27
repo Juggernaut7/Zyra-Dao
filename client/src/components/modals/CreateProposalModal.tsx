@@ -46,6 +46,7 @@ const CreateProposalModal: React.FC<CreateProposalModalProps> = ({
         amountRequested: parseFloat(formData.amountRequested),
         category: formData.category as 'treasury' | 'governance' | 'grants' | 'infrastructure' | 'marketing',
         proposer: account || '0x1234...5678', // Use wallet address or fallback
+        status: 'active' as const,
         commitStartTime: new Date(),
         commitEndTime: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 hours from now
         revealStartTime: new Date(Date.now() + 24 * 60 * 60 * 1000),
@@ -90,8 +91,7 @@ const CreateProposalModal: React.FC<CreateProposalModalProps> = ({
     try {
       console.log('Generating AI summary for proposal creation...');
       
-      // Create a proposal-specific prompt for AI analysis
-      const proposalPrompt = `Analyze this DAO proposal and provide a comprehensive summary:
+        // Create a proposal-specific prompt for AI analysis
 
 Title: ${formData.title}
 Description: ${formData.description}

@@ -287,17 +287,17 @@ class VotingService {
 
     try {
       const proposalIdUint = BigInt(proposalId);
-      const [title, description, proposer, amountRequested, commitStartTime, commitEndTime, revealStartTime, revealEndTime, executed, exists] = 
+      const [title: _title, description: _description, proposer: _proposer, amountRequested: _amountRequested, commitStartTime: _commitStartTime, commitEndTime: _commitEndTime, revealStartTime: _revealStartTime, revealEndTime: _revealEndTime, executed: _executed, exists: _exists] = 
         await this.votingContract.getProposal(proposalIdUint);
       
       const now = Math.floor(Date.now() / 1000);
-      const isActive = now < Number(revealEndTime);
+      const isActive = now < Number(_revealEndTime);
 
       return {
-        commitEndTime: Number(commitEndTime) * 1000, // Convert to milliseconds
-        revealEndTime: Number(revealEndTime) * 1000, // Convert to milliseconds
+        commitEndTime: Number(_commitEndTime) * 1000, // Convert to milliseconds
+        revealEndTime: Number(_revealEndTime) * 1000, // Convert to milliseconds
         isActive,
-        isExecuted: executed,
+        isExecuted: _executed,
       };
     } catch (error) {
       console.error('Failed to get proposal status:', error);
@@ -459,10 +459,10 @@ class VotingService {
       for (let i = count; i > 0; i--) {
         try {
           const proposalIdUint = BigInt(i);
-          const [title, description, proposer, amountRequested, commitStartTime, commitEndTime, revealStartTime, revealEndTime, executed, exists] =
+          const [title: _title, description: _description, proposer: _proposer, amountRequested: _amountRequested, commitStartTime: _commitStartTime, commitEndTime: _commitEndTime, revealStartTime: _revealStartTime, revealEndTime: _revealEndTime, executed: _executed, exists: _exists] =
             await this.votingContract!.getProposal(proposalIdUint);
           
-          if (exists) {
+          if (_exists) {
             console.log(`✅ Found valid proposal at ID: ${i}`);
             return i;
           }
@@ -492,12 +492,12 @@ class VotingService {
       for (let i = 1; i <= count; i++) {
         try {
           const proposalIdUint = BigInt(i);
-          const [title, description, proposer, amountRequested, commitStartTime, commitEndTime, revealStartTime, revealEndTime, executed, exists] =
+          const [title: _title, description: _description, proposer: _proposer, amountRequested: _amountRequested, commitStartTime: _commitStartTime, commitEndTime: _commitEndTime, revealStartTime: _revealStartTime, revealEndTime: _revealEndTime, executed: _executed, exists: _exists] =
             await this.votingContract.getProposal(proposalIdUint);
           
-          if (exists) {
+          if (_exists) {
             validIds.push(i);
-            console.log(`✅ Valid proposal found: ID ${i} - ${title}`);
+            console.log(`✅ Valid proposal found: ID ${i} - ${_title}`);
           }
         } catch (error) {
           console.log(`Proposal ID ${i} not accessible`);
@@ -561,9 +561,9 @@ class VotingService {
             userVote,
             commitHash: commitHash || 'null'
           });
-        } catch (error) {
+        } catch (error: unknown) {
           // Only log if it's not the expected "Proposal does not exist" error
-          if (!error.message?.includes('Proposal does not exist')) {
+          if (!(error as Error).message?.includes('Proposal does not exist')) {
             console.log(`❌ Proposal ${i} error:`, error);
           }
         }

@@ -133,7 +133,7 @@ class MidnightService {
   /**
    * Create zero-knowledge proof for transaction
    */
-  async createZKProof(transaction: PrivateTransaction): Promise<string> {
+  async createZKProof(_transaction: PrivateTransaction): Promise<string> {
     if (!this.isInitialized) {
       await this.initialize();
     }

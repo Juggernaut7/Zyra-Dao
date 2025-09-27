@@ -128,9 +128,9 @@ export const useWalletStore = create<WalletState>()(
           // Set up account change listeners
           walletService.onAccountsChanged((accounts: string[]) => {
             if (accounts.length === 0) {
-              get().disconnect();
-            } else if (accounts[0] !== get().account) {
-              get().connect();
+              _get().disconnect();
+            } else if (accounts[0] !== _get().account) {
+              _get().connect();
             }
           });
         }

@@ -238,7 +238,7 @@ const ProposalDetail: React.FC = () => {
   const generateAISummary = async () => {
     setIsGeneratingSummary(true);
     try {
-      const aiResponse = await elizaOSService.getTreasuryAnalysis({
+        // const aiResponse = await elizaOSService.getTreasuryAnalysis({
         balance: 500000,
         transactions: [],
         assets: []

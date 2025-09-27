@@ -74,9 +74,7 @@ const Members: React.FC = () => {
         page: currentPage,
         limit: 20,
         role: roleFilter !== 'all' ? roleFilter : undefined,
-        search: searchTerm || undefined,
-        sortBy,
-        sortOrder: 'desc'
+        search: searchTerm || undefined
       });
 
       setMembers(response.data.data.members);

@@ -47,7 +47,7 @@ interface DAOSettings {
 }
 
 const Settings: React.FC = () => {
-  const { isConnected, account } = useWalletStore();
+  const { isConnected } = useWalletStore();
   const [settings, setSettings] = useState<DAOSettings>({
     name: 'Zyra DAO',
     description: 'A privacy-first DAO with AI-powered insights and commit-reveal voting.',
@@ -75,7 +75,7 @@ const Settings: React.FC = () => {
     }
   });
 
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
@@ -130,7 +130,7 @@ const Settings: React.FC = () => {
       setSettings(prev => ({
         ...prev,
         [parent]: {
-          ...prev[parent as keyof DAOSettings],
+          ...(prev[parent as keyof DAOSettings] as any),
           [child]: value
         }
       }));

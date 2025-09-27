@@ -6,14 +6,8 @@ import {
   ArrowUpRight,
   ArrowDownRight,
   Wallet,
-  Target,
   Activity,
   Play,
-  RotateCcw,
-  Settings,
-  DollarSign,
-  PieChart,
-  BarChart3,
   RefreshCw
 } from 'lucide-react';
 import { 
@@ -54,7 +48,7 @@ const Treasury: React.FC = () => {
     communicationEnabled,
     initializeIntegrations,
     getAIAnalysis,
-    getAgentInsights,
+    // getAgentInsights,
     executePrivateTransaction
   } = useTreasuryStore();
   
@@ -134,7 +128,7 @@ const Treasury: React.FC = () => {
           }
         ];
         
-        setSimulationResults(simulationData);
+        setSimulationResults(simulationData as TreasuryInsight[]);
       } else {
         // Fallback to original AI service
         const insights = await aiService.generateTreasuryInsights(totalValue, '6 months');
@@ -665,36 +659,36 @@ const Treasury: React.FC = () => {
                 <div className="flex items-center justify-between mb-3">
                   <h4 className="font-semibold text-neutral-900">{scenario.scenario}</h4>
                   <span className={`text-xs px-2 py-1 rounded-full ${
-                    scenario.risk === 'Low' 
+                    scenario.riskLevel === 'low' 
                       ? 'bg-success/10 text-success' 
-                      : scenario.risk === 'Medium'
+                      : scenario.riskLevel === 'medium'
                       ? 'bg-brandBlue-100 text-brandBlue-700'
                       : 'bg-danger/10 text-danger'
                   }`}>
-                    {scenario.risk} Risk
+                    {scenario.riskLevel} Risk
                   </span>
                 </div>
                 
                 <div className="space-y-2">
                   <div className="flex justify-between text-sm">
                     <span className="text-neutral-500">Current</span>
-                    <span className="font-medium">${(scenario.current || 0).toLocaleString()}</span>
+                    <span className="font-medium">${totalValue.toLocaleString()}</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-neutral-500">Projected</span>
                     <span className={`font-medium ${
-                      scenario.projected > scenario.current ? 'text-success' : 'text-danger'
+                      scenario.projectedValue > totalValue ? 'text-success' : 'text-danger'
                     }`}>
-                      ${(scenario.projected || 0).toLocaleString()}
+                      ${scenario.projectedValue.toLocaleString()}
                     </span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-neutral-500">Change</span>
                     <span className={`font-medium ${
-                      scenario.projected > scenario.current ? 'text-success' : 'text-danger'
+                      scenario.projectedValue > totalValue ? 'text-success' : 'text-danger'
                     }`}>
-                      {scenario.projected > scenario.current ? '+' : ''}
-                      {scenario.current && scenario.projected ? (((scenario.projected - scenario.current) / scenario.current) * 100).toFixed(1) : '0.0'}%
+                      {scenario.projectedValue > totalValue ? '+' : ''}
+                      {(((scenario.projectedValue - totalValue) / totalValue) * 100).toFixed(1)}%
                     </span>
                   </div>
                 </div>
@@ -708,7 +702,7 @@ const Treasury: React.FC = () => {
               {(simulationResults || []).map((scenario, index) => (
                 <div key={`insight-${index}`} className="flex items-start space-x-2">
                   <span className="text-neutral-400">•</span>
-                  <span>{scenario.description}</span>
+                  <span>{scenario.reasoning}</span>
                 </div>
               ))}
             </div>

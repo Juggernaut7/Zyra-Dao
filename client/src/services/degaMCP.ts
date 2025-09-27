@@ -27,7 +27,7 @@ interface MarketAnalysis {
   riskFactors: string[];
 }
 
-interface DEGAResponse {
+// interface DEGAResponse {
   success: boolean;
   data?: any;
   error?: string;
@@ -84,7 +84,7 @@ class DEGAMCPService {
   /**
    * Analyze treasury performance using DEGA AI
    */
-  async analyzeTreasuryPerformance(treasuryData: {
+  async analyzeTreasuryPerformance(_treasuryData: {
     balance: number;
     transactions: any[];
     timeHorizon: string;
@@ -246,19 +246,19 @@ class DEGAMCPService {
           scenario: 'Bull Market',
           predictedValue: data.currentValue * 1.3,
           confidence: 0.75,
-          risk: 'medium'
+          risk: 'medium' as const
         },
         {
           scenario: 'Bear Market',
           predictedValue: data.currentValue * 0.7,
           confidence: 0.82,
-          risk: 'high'
+          risk: 'high' as const
         },
         {
           scenario: 'Sideways Market',
           predictedValue: data.currentValue * 1.05,
           confidence: 0.90,
-          risk: 'low'
+          risk: 'low' as const
         }
       ];
 

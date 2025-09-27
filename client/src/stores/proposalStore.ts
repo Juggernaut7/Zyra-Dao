@@ -45,7 +45,7 @@ interface ProposalState {
   setLoading: (loading: boolean) => void;
 }
 
-export const useProposalStore = create<ProposalState>((set, get) => ({
+export const useProposalStore = create<ProposalState>((set, _get) => ({
   proposals: [],
   currentProposal: null,
   loading: false,

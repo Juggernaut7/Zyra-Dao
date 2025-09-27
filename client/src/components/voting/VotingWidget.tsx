@@ -33,7 +33,7 @@ const VotingWidget: React.FC<VotingWidgetProps> = ({
   hasRevealed,
   onVoteUpdate
 }) => {
-  const { isConnected, account } = useWalletStore();
+  const { isConnected } = useWalletStore();
   const [selectedVote, setSelectedVote] = useState<'yes' | 'no' | null>(null);
   const [salt, setSalt] = useState('');
   const [isCommitting, setIsCommitting] = useState(false);

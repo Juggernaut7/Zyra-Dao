@@ -153,7 +153,7 @@ const Proposals: React.FC = () => {
   };
 
   // Mock proposals data (fallback)
-  const mockProposals = [
+  // const mockProposals = [
     {
       id: '1',
       title: 'Marketing Campaign Q4 2024',
@@ -411,7 +411,7 @@ const Proposals: React.FC = () => {
                         if (voteData) {
                           return `${voteData.revealedVotes}/${voteData.committedVotes} votes revealed`;
                         }
-                        return `${proposal.revealCount || 0}/${proposal.commitCount || 0} votes revealed`;
+                        return `${proposal.voteCount?.revealed || 0}/${proposal.voteCount?.committed || 0} votes revealed`;
                       })()}
                     </span>
                   </div>
@@ -424,15 +424,15 @@ const Proposals: React.FC = () => {
                           if (voteData) {
                             return (
                               <>
-                                <span>Yes: {voteData.yesVotes}</span>
-                                <span>No: {voteData.noVotes}</span>
+                                <span>Yes: {voteData.yesVotes || 0}</span>
+                                <span>No: {voteData.noVotes || 0}</span>
                               </>
                             );
                           }
                           return (
                             <>
-                              <span>Yes: {proposal.yesVotes || 0}</span>
-                              <span>No: {proposal.noVotes || 0}</span>
+                                <span>Yes: {proposal.voteCount?.yes || 0}</span>
+                                <span>No: {proposal.voteCount?.no || 0}</span>
                             </>
                           );
                         })()}
@@ -467,8 +467,7 @@ const Proposals: React.FC = () => {
                             size="sm" 
                             variant={hasCommitted ? "secondary" : "primary"}
                             className={`flex items-center space-x-1 ${hasCommitted ? 'opacity-75' : ''}`}
-                            onClick={(e) => {
-                              e.stopPropagation();
+                            onClick={() => {
                               handleProposalClick(proposal._id);
                             }}
                           >
@@ -490,8 +489,7 @@ const Proposals: React.FC = () => {
                         size="sm" 
                         variant="ghost" 
                         className="flex items-center space-x-1"
-                        onClick={(e) => {
-                          e.stopPropagation();
+                        onClick={() => {
                           handleProposalClick(proposal._id);
                         }}
                       >
