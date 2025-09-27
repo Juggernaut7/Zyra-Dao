@@ -107,24 +107,21 @@ const Treasury: React.FC = () => {
         const simulationData = [
           {
             scenario: 'Conservative Strategy',
-            risk: 'Low',
-            current: totalValue,
-            projected: Math.round(totalValue * 1.05), // 5% growth
-            description: analysis.eliza?.message || 'Conservative approach with minimal risk'
+            riskLevel: 'low',
+            projectedValue: Math.round(totalValue * 1.05), // 5% growth
+            reasoning: analysis.eliza?.message || 'Conservative approach with minimal risk'
           },
           {
             scenario: 'Moderate Strategy', 
-            risk: 'Medium',
-            current: totalValue,
-            projected: Math.round(totalValue * 1.12), // 12% growth
-            description: analysis.dega?.[0]?.description || 'Balanced approach with moderate risk'
+            riskLevel: 'medium',
+            projectedValue: Math.round(totalValue * 1.12), // 12% growth
+            reasoning: analysis.dega?.[0]?.description || 'Balanced approach with moderate risk'
           },
           {
             scenario: 'Aggressive Strategy',
-            risk: 'High', 
-            current: totalValue,
-            projected: Math.round(totalValue * 1.25), // 25% growth
-            description: 'High-risk, high-reward strategy for maximum returns'
+            riskLevel: 'high', 
+            projectedValue: Math.round(totalValue * 1.25), // 25% growth
+            reasoning: 'High-risk, high-reward strategy for maximum returns'
           }
         ];
         
@@ -677,18 +674,18 @@ const Treasury: React.FC = () => {
                   <div className="flex justify-between text-sm">
                     <span className="text-neutral-500">Projected</span>
                     <span className={`font-medium ${
-                      scenario.projectedValue > totalValue ? 'text-success' : 'text-danger'
+                      (scenario.projectedValue || 0) > totalValue ? 'text-success' : 'text-danger'
                     }`}>
-                      ${scenario.projectedValue.toLocaleString()}
+                      ${(scenario.projectedValue || 0).toLocaleString()}
                     </span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-neutral-500">Change</span>
                     <span className={`font-medium ${
-                      scenario.projectedValue > totalValue ? 'text-success' : 'text-danger'
+                      (scenario.projectedValue || 0) > totalValue ? 'text-success' : 'text-danger'
                     }`}>
-                      {scenario.projectedValue > totalValue ? '+' : ''}
-                      {(((scenario.projectedValue - totalValue) / totalValue) * 100).toFixed(1)}%
+                      {(scenario.projectedValue || 0) > totalValue ? '+' : ''}
+                      {(((scenario.projectedValue || 0) - totalValue) / totalValue * 100).toFixed(1)}%
                     </span>
                   </div>
                 </div>
