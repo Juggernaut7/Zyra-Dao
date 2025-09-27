@@ -125,16 +125,20 @@ export const useWalletStore = create<WalletState>()(
           // Restore token to localStorage for API requests
           localStorage.setItem('token', state.token);
           
-          // Set up account change listeners
-          walletService.onAccountsChanged((accounts: string[]) => {
-            if (accounts.length === 0) {
-              _get().disconnect();
-            } else if (accounts[0] !== _get().account) {
-              _get().connect();
-            }
-          });
+          // Account change listeners will be set up after store creation
         }
       },
     }
   )
 );
+
+// Set up account change listeners after store creation
+walletService.onAccountsChanged((accounts: string[]) => {
+  if (accounts.length === 0) {
+    useWalletStore.getState().disconnect();
+  } else if (accounts[0] !== useWalletStore.getState().account) {
+    useWalletStore.getState().connect();
+  }
+});
+
+export default useWalletStore;

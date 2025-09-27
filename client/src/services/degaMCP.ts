@@ -27,11 +27,13 @@ interface MarketAnalysis {
   riskFactors: string[];
 }
 
-// interface DEGAResponse {
+/*
+interface DEGAResponse {
   success: boolean;
   data?: any;
   error?: string;
 }
+*/
 
 class DEGAMCPService {
   private config: DEGAConfig;

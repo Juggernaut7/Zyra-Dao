@@ -47,10 +47,10 @@ const CreateProposalModal: React.FC<CreateProposalModalProps> = ({
         category: formData.category as 'treasury' | 'governance' | 'grants' | 'infrastructure' | 'marketing',
         proposer: account || '0x1234...5678', // Use wallet address or fallback
         status: 'active' as const,
-        commitStartTime: new Date(),
-        commitEndTime: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 hours from now
-        revealStartTime: new Date(Date.now() + 24 * 60 * 60 * 1000),
-        revealEndTime: new Date(Date.now() + 48 * 60 * 60 * 1000), // 48 hours from now
+        commitStartTime: new Date().toISOString(),
+        commitEndTime: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(), // 24 hours from now
+        revealStartTime: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
+        revealEndTime: new Date(Date.now() + 48 * 60 * 60 * 1000).toISOString(), // 48 hours from now
       };
 
       await createProposal(proposalData);
@@ -91,20 +91,7 @@ const CreateProposalModal: React.FC<CreateProposalModalProps> = ({
     try {
       console.log('Generating AI summary for proposal creation...');
       
-        // Create a proposal-specific prompt for AI analysis
-
-Title: ${formData.title}
-Description: ${formData.description}
-Amount Requested: $${formData.amountRequested}
-Category: ${formData.category}
-
-Please provide:
-1. A clear summary of what this proposal aims to achieve
-2. Key benefits and potential impact on the DAO
-3. Risk assessment and considerations
-4. Recommendation for the community
-
-Format as a clear, structured analysis that helps DAO members understand the proposal better.`;
+      // Create a proposal-specific prompt for AI analysis
       
       // Use the same AI service but with a proposal-specific prompt
       const aiResponse = await elizaOSService.getTreasuryAnalysis({
@@ -116,7 +103,26 @@ Format as a clear, structured analysis that helps DAO members understand the pro
       console.log('AI response received:', aiResponse);
       
       // Create a proposal-specific summary
-      const aiSummary = `\n\n--- AI-Generated Proposal Analysis ---\n\n**Proposal Overview:**\n${formData.title} requests $${formData.amountRequested} for ${formData.category} initiatives.\n\n**Key Points:**\n• Clear objectives and expected outcomes\n• Reasonable funding request amount\n• Well-defined implementation timeline\n• Community benefit potential\n\n**Recommendation:**\nThis proposal appears to align with DAO goals and provides value to the community. Consider the following:\n• Budget allocation is appropriate for the scope\n• Timeline is realistic and achievable\n• Expected outcomes are measurable\n\n**Next Steps:**\nReview the detailed description above and consider community feedback before voting.`;
+      const aiSummary = `
+--- AI-Generated Proposal Analysis ---
+
+**Proposal Overview:**
+${formData.title} requests $${formData.amountRequested} for ${formData.category} initiatives.
+
+**Key Points:**
+• Clear objectives and expected outcomes
+• Reasonable funding request amount
+• Well-defined implementation timeline
+• Community benefit potential
+
+**Recommendation:**
+This proposal appears to align with DAO goals and provides value to the community. Consider the following:
+• Budget allocation is appropriate for the scope
+• Timeline is realistic and achievable
+• Expected outcomes are measurable
+
+**Next Steps:**
+Review the detailed description above and consider community feedback before voting.`;
       
       setFormData(prev => ({
         ...prev,

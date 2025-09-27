@@ -17,7 +17,7 @@ import VoteProgress from '../components/voting/VoteProgress';
 import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
 import ErrorBoundary from '../components/ErrorBoundary';
-import { elizaOSService } from '../services/elizaOS';
+// import { elizaOSService } from '../services/elizaOS';
 import { votingService } from '../services/voting';
 import { proposalMappingService } from '../services/proposalMapping';
 import { toast } from 'react-hot-toast';
@@ -238,11 +238,7 @@ const ProposalDetail: React.FC = () => {
   const generateAISummary = async () => {
     setIsGeneratingSummary(true);
     try {
-        // const aiResponse = await elizaOSService.getTreasuryAnalysis({
-        balance: 500000,
-        transactions: [],
-        assets: []
-      });
+      // Generate proposal-specific AI summary
       
       // Transform response to proposal-specific format
       setAiSummary({

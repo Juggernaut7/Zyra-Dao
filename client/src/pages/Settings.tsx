@@ -83,7 +83,7 @@ const Settings: React.FC = () => {
 
   useEffect(() => {
     const fetchSettings = async () => {
-      setLoading(true);
+      // setLoading(true);
       try {
         // TODO: Replace with real API call
         // const response = await api.settings.get();
@@ -91,12 +91,12 @@ const Settings: React.FC = () => {
         
         // For now, use mock data
         setTimeout(() => {
-          setLoading(false);
+          // setLoading(false);
         }, 1000);
       } catch (error: any) {
         console.error('Failed to fetch settings:', error);
         setError('Failed to load settings');
-        setLoading(false);
+        // setLoading(false);
       }
     };
 

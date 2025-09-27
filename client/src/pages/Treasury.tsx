@@ -23,7 +23,7 @@ import {
   Line,
   Area,
   AreaChart,
-  Legend
+  // Legend
 } from 'recharts';
 import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
@@ -35,7 +35,7 @@ const Treasury: React.FC = () => {
   const { 
     totalValue, 
     assets, 
-    actions, 
+    // actions, 
     monthlySpending,
     activeProposals,
     fetchTreasurySummary, 
@@ -128,7 +128,7 @@ const Treasury: React.FC = () => {
           }
         ];
         
-        setSimulationResults(simulationData as TreasuryInsight[]);
+        setSimulationResults(simulationData as unknown as TreasuryInsight[]);
       } else {
         // Fallback to original AI service
         const insights = await aiService.generateTreasuryInsights(totalValue, '6 months');
@@ -649,9 +649,9 @@ const Treasury: React.FC = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
                 className={`p-4 rounded-lg border-2 ${
-                  scenario.risk === 'Low' 
+                  scenario.riskLevel === 'low' 
                     ? 'border-success/20 bg-success/5' 
-                    : scenario.risk === 'Medium'
+                    : scenario.riskLevel === 'medium'
                     ? 'border-brandBlue-200 bg-brandBlue-50'
                     : 'border-danger/20 bg-danger/5'
                 }`}

@@ -41,16 +41,7 @@ const VoteProgress: React.FC<VoteProgressProps> = ({
     visible: { opacity: 1, y: 0 }
   };
 
-  const progressVariants = {
-    hidden: { width: 0 },
-    visible: (percentage: number) => ({
-      width: `${percentage}%`,
-      transition: {
-        duration: 1.5,
-        ease: "easeOut"
-      }
-    })
-  };
+// Removed complex variants due to TypeScript issues
 
   return (
     <motion.div
@@ -89,10 +80,9 @@ const VoteProgress: React.FC<VoteProgressProps> = ({
           <div className="w-full bg-neutral-200 rounded-full h-2">
             <motion.div
               className="bg-brandBlue-500 h-2 rounded-full"
-              variants={progressVariants}
-              initial="hidden"
-              animate="visible"
-              custom={committedPercentage}
+              initial={{ width: 0 }}
+              animate={{ width: `${committedPercentage}%` }}
+              transition={{ duration: 1.5, ease: "easeOut" }}
             />
           </div>
           <p className="text-xs text-neutral-500 mt-1">
@@ -113,10 +103,9 @@ const VoteProgress: React.FC<VoteProgressProps> = ({
           <div className="w-full bg-neutral-200 rounded-full h-2">
             <motion.div
               className="bg-success h-2 rounded-full"
-              variants={progressVariants}
-              initial="hidden"
-              animate="visible"
-              custom={revealedPercentage}
+              initial={{ width: 0 }}
+              animate={{ width: `${revealedPercentage}%` }}
+              transition={{ duration: 1.5, ease: "easeOut" }}
             />
           </div>
           <p className="text-xs text-neutral-500 mt-1">
@@ -149,10 +138,9 @@ const VoteProgress: React.FC<VoteProgressProps> = ({
             <div className="w-full bg-neutral-200 rounded-full h-3">
               <motion.div
                 className="bg-success h-3 rounded-full"
-                variants={progressVariants}
-                initial="hidden"
-                animate="visible"
-                custom={yesPercentage}
+                initial={{ width: 0 }}
+                animate={{ width: `${yesPercentage}%` }}
+                transition={{ duration: 1.5, ease: "easeOut" }}
               />
             </div>
           </div>
@@ -176,10 +164,9 @@ const VoteProgress: React.FC<VoteProgressProps> = ({
             <div className="w-full bg-neutral-200 rounded-full h-3">
               <motion.div
                 className="bg-danger h-3 rounded-full"
-                variants={progressVariants}
-                initial="hidden"
-                animate="visible"
-                custom={noPercentage}
+                initial={{ width: 0 }}
+                animate={{ width: `${noPercentage}%` }}
+                transition={{ duration: 1.5, ease: "easeOut" }}
               />
             </div>
           </div>

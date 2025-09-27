@@ -152,8 +152,9 @@ const Proposals: React.FC = () => {
     navigate(`/proposals/${proposalId}`);
   };
 
-  // Mock proposals data (fallback)
-  // const mockProposals = [
+  // Mock proposals data (fallback) - commented out for now
+  /*
+  const mockProposals = [
     {
       id: '1',
       title: 'Marketing Campaign Q4 2024',
@@ -200,6 +201,7 @@ const Proposals: React.FC = () => {
       createdAt: new Date(Date.now() - 86400000).toISOString(),
     },
   ];
+  */
 
 
   const getStatusIcon = (status: string) => {
@@ -411,7 +413,7 @@ const Proposals: React.FC = () => {
                         if (voteData) {
                           return `${voteData.revealedVotes}/${voteData.committedVotes} votes revealed`;
                         }
-                        return `${proposal.voteCount?.revealed || 0}/${proposal.voteCount?.committed || 0} votes revealed`;
+                        return `${proposal.voteCount?.total || 0} votes revealed`;
                       })()}
                     </span>
                   </div>
@@ -447,8 +449,8 @@ const Proposals: React.FC = () => {
                               if (voteData && (voteData.yesVotes + voteData.noVotes) > 0) {
                                 return (voteData.yesVotes / (voteData.yesVotes + voteData.noVotes)) * 100;
                               }
-                              const totalVotes = (proposal.yesVotes || 0) + (proposal.noVotes || 0);
-                              return totalVotes > 0 ? ((proposal.yesVotes || 0) / totalVotes) * 100 : 0;
+                              const totalVotes = (proposal.voteCount?.yes || 0) + (proposal.voteCount?.no || 0);
+                              return totalVotes > 0 ? ((proposal.voteCount?.yes || 0) / totalVotes) * 100 : 0;
                             })()}%` 
                           }}
                           transition={{ duration: 0.8, delay: index * 0.1 }}
