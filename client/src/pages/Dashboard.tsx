@@ -17,7 +17,6 @@ import { useWalletStore } from '../stores/walletStore';
 import { useProposalStore } from '../stores/proposalStore';
 import { useTreasuryStore } from '../stores/treasuryStore';
 import { api } from '../services/api';
-import zyraLogo from '../assets/zyra-logo.png';
 
 const Dashboard: React.FC = () => {
   const navigate = useNavigate();
@@ -161,7 +160,6 @@ const Dashboard: React.FC = () => {
       {/* Welcome Section */}
       <motion.div variants={itemVariants} className="flex items-center justify-between mb-6">
         <div className="flex items-center space-x-4">
-        <img src={zyraLogo} alt="Zyra" className="h-12 w-auto" />
         <div>
           <h1 className="font-display text-3xl font-bold text-neutral-900 mb-2">
             Welcome to Zyra DAO
