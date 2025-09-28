@@ -41,8 +41,8 @@ class DEGAMCPService {
 
   constructor() {
     this.config = {
-      baseUrl: 'http://localhost',
-      port: 3000,
+      baseUrl: 'https://zyra-mcp-server.onrender.com', // Production MCP server
+      port: '', // Empty for production
       model: 'midnight-mcp-treasury'
     };
   }
@@ -54,8 +54,8 @@ class DEGAMCPService {
     try {
       console.log('🤖 Initializing Midnight MCP (DEGA AI MCP) for intelligent treasury management...');
       
-      // Check if Midnight MCP server is running on localhost:3000
-      const serverUrl = `${this.config.baseUrl}:${this.config.port}`;
+      // Check if Midnight MCP server is running (production or localhost)
+      const serverUrl = this.config.port ? `${this.config.baseUrl}:${this.config.port}` : this.config.baseUrl;
       console.log(`🔍 Checking Midnight MCP server at ${serverUrl}...`);
       
       try {

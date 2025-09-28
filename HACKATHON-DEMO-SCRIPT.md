@@ -1,56 +1,107 @@
 # Zyra DAO - DEGA Hackathon Demo Script
 
-## 🎯 Demo Overview (3-5 minutes)
+## 🎯 Demo Overview (5-7 minutes)
 **"AI-Powered DAO Treasury Management on Midnight"**
 
 ---
 
-## 📋 Demo Flow
+## 🎬 Complete Demo Script (5-7 minutes)
 
-### 1. Introduction (30 seconds)
-- **Problem**: DAOs need intelligent, privacy-first treasury management
-- **Solution**: Zyra DAO integrates Midnight.js, DEGA AI MCP, ElizaOS, and Communication MCP
-- **Key Features**: Commit-reveal voting, AI insights, private transactions, agent coordination
+### **Opening (30 seconds)**
+*"Hi everyone! I'm excited to present Zyra DAO, an AI-powered treasury management platform we built for the DEGA hackathon. Unlike most DAO projects that focus only on frontend, we've created a complete infrastructure with smart contracts, backend API, and AI integrations. Let me show you what makes this special."*
 
-### 2. Treasury Dashboard (60 seconds)
-- Show real treasury data (not mock data)
-- Highlight integration status indicators:
-  - ✅ Midnight.js (privacy-first)
-  - ✅ DEGA AI MCP (intelligent analysis)
-  - ✅ ElizaOS (AI agents)
-  - ✅ Communication MCP (DAO coordination)
-- Demonstrate "Private Allocate" button using Midnight.js
+### **1. Dashboard Overview (60 seconds)**
+*"Let's start with our dashboard. You can see we have real treasury data here - $475,000 in our treasury, 3 active proposals, and 42 DAO members. Notice these green indicators on the right - they show our hackathon integrations are active:*
 
-### 3. AI-Powered Analysis (60 seconds)
-- Click "Simulate" button
-- Show DEGA AI MCP analysis:
-  - Risk assessment
-  - Diversification recommendations
-  - Yield farming opportunities
-- Show ElizaOS agent insights:
-  - Treasury performance analysis
-  - Risk warnings
-  - Market predictions
+- *Midnight.js for privacy-first transactions*
+- *DEGA AI MCP for intelligent analysis* 
+- *ElizaOS for AI agents*
+- *Communication MCP for DAO coordination*
 
-### 4. Voting System (60 seconds)
-- Navigate to Proposals page
-- Show commit-reveal voting
-- Demonstrate privacy-preserving voting
-- Show real-time results
+*This isn't just a frontend - we have a full backend API running on Render, MongoDB database with real data, and smart contracts deployed on Sepolia testnet."*
 
-### 5. Communication MCP (30 seconds)
-- Show proposal alerts
-- Demonstrate treasury update notifications
-- Highlight DAO coordination features
+### **2. AI-Powered Treasury Analysis (90 seconds)**
+*"Now let's see our AI in action. I'll click the 'Simulate' button to run our AI analysis..."*
 
-### 6. Conclusion (30 seconds)
-- **Key Achievements**:
-  - Full-stack DAO treasury management
-  - Privacy-first with Midnight.js
-  - AI-powered insights with DEGA MCP
-  - Agent coordination with ElizaOS
-  - Real-time communication with Communication MCP
-- **Differentiation**: Most projects are frontend-only, we have complete infrastructure
+*[Click Simulate button]*
+
+*"Here you can see our AI systems working together. DEGA AI MCP is analyzing our treasury performance and providing risk assessments. Look at these three scenarios:*
+
+- *Conservative Strategy with low risk and 5% projected growth*
+- *Moderate Strategy with medium risk and 12% growth*
+- *Aggressive Strategy with high risk and 25% growth*
+
+*ElizaOS agents are providing additional insights about market conditions and recommendations. This isn't just mock data - our AI is actually analyzing our real treasury data and providing actionable insights."*
+
+### **3. Private Transactions with Midnight.js (60 seconds)**
+*"One of our key features is privacy-first transactions using Midnight.js. Let me demonstrate the 'Private Allocate' button..."*
+
+*[Click Private Allocate]*
+
+*"This executes a private transaction using zero-knowledge proofs. Notice how the transaction is processed privately while maintaining transparency in our treasury records. The UI updates in real-time to show the new allocation. This is the power of Midnight.js - privacy without sacrificing accountability."*
+
+### **4. Commit-Reveal Voting System (90 seconds)**
+*"Let's navigate to our proposals page to see our voting system..."*
+
+*[Navigate to Proposals]*
+
+*"Here you can see our active proposals. Each proposal has a unique blockchain ID mapped to our database. Let me show you the commit-reveal voting process..."*
+
+*[Click on a proposal]*
+
+*"This is where the magic happens. During the commit phase, members submit encrypted votes. During the reveal phase, they reveal their votes with proof. This ensures privacy during voting while maintaining transparency in results. You can see the real-time vote counts and percentages."*
+
+*"Notice how each proposal gets a unique blockchain ID - we've solved the mapping problem between our database and blockchain."*
+
+### **5. AI Summary Generation (60 seconds)**
+*"Let me show you our AI summary feature. When creating a new proposal..."*
+
+*[Click Create Proposal]*
+
+*"Our AI automatically generates a comprehensive summary of the proposal. This uses ElizaOS to analyze the proposal content and provide insights. This helps DAO members understand proposals better and make informed decisions."*
+
+*[Fill out proposal form and show AI summary]*
+
+### **6. Real-time Communication (45 seconds)**
+*"Our Communication MCP enables real-time coordination between DAO members. When treasury transactions occur, when proposals are created, or when votes are cast, all members get notified. This creates a truly coordinated DAO experience."*
+
+*"You can see in the console that our agents are communicating about treasury updates and proposal activities."*
+
+### **7. Technical Architecture (60 seconds)**
+*"Let me quickly show you our technical architecture. We have:*
+
+- *Frontend: React with TypeScript, Zustand for state management*
+- *Backend: Node.js with Express, MongoDB for data persistence*
+- *Blockchain: Smart contracts on Sepolia testnet*
+- *AI Integration: DEGA MCP, ElizaOS, Hugging Face Router API*
+- *Privacy: Midnight.js for private transactions*
+- *Communication: MCP for agent coordination*
+
+*All of this is production-ready and deployed. Our backend is running on Render, our frontend can be deployed anywhere, and our smart contracts are live on Sepolia."*
+
+### **Closing (30 seconds)**
+*"Zyra DAO demonstrates how AI, privacy, and communication can work together to create a next-generation DAO treasury management system. We've successfully integrated all required hackathon technologies while maintaining production-quality code and infrastructure. This isn't just a demo - it's a working system that could be deployed today."*
+
+### **Final Thank You (15 seconds)**
+*"Thank you for watching our demonstration of Zyra DAO. We're excited to be part of the DEGA hackathon and look forward to continuing to build the future of decentralized governance. For more information, you can check out our GitHub repository and live demo. Thank you!"*
+
+---
+
+## 🎯 Key Talking Points
+
+### **What Makes Us Different**
+- **Complete Infrastructure**: Not just frontend, but full-stack with backend, database, and smart contracts
+- **Real Data**: No mock data, everything is connected to real APIs and databases
+- **AI Integration**: Multiple AI systems working together (DEGA MCP, ElizaOS, Hugging Face)
+- **Privacy-First**: Midnight.js integration for private transactions
+- **Production Ready**: Deployed smart contracts, backend API, and scalable architecture
+
+### **Technical Highlights**
+- **Smart Contract Integration**: Real blockchain interactions with proper error handling
+- **AI-Powered Insights**: Multiple AI models providing treasury analysis and recommendations
+- **Privacy-Preserving Voting**: Commit-reveal system with zero-knowledge proofs
+- **Real-time Communication**: Agent coordination and DAO member notifications
+- **Scalable Architecture**: Microservices with proper separation of concerns
 
 ---
 
