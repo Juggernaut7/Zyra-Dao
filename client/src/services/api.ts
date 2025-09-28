@@ -1,7 +1,22 @@
 import axios from 'axios';
 
-// Base API configuration
-const API_BASE_URL = (import.meta as any).env?.VITE_API_URL || 'http://localhost:5000/api';
+// Base API configuration with fallback to production server
+const getApiBaseUrl = () => {
+  const envUrl = (import.meta as any).env?.VITE_API_URL;
+  if (envUrl) {
+    return envUrl;
+  }
+  
+  // Check if we're in development (localhost available)
+  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    return 'http://localhost:5000/api';
+  }
+  
+  // Fallback to production server
+  return 'https://zyra-dao.onrender.com/api';
+};
+
+const API_BASE_URL = getApiBaseUrl();
 console.log('API Base URL:', API_BASE_URL);
 
 // Create axios instance with base configuration
@@ -31,7 +46,7 @@ apiClient.interceptors.request.use(
   }
 );
 
-// Handle auth errors
+// Handle auth errors and connection failures
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
@@ -42,6 +57,12 @@ apiClient.interceptors.response.use(
         window.location.href = '/';
       }
     }
+    
+    // Handle connection failures - could implement retry logic here
+    if (error.code === 'ERR_NETWORK' || error.code === 'ECONNREFUSED') {
+      console.warn('🔄 Connection failed, consider switching to production server');
+    }
+    
     return Promise.reject(error);
   }
 );
