@@ -42,7 +42,7 @@ class DEGAMCPService {
   constructor() {
     this.config = {
       baseUrl: 'https://mcp-server-2t0r.onrender.com', // Production MCP server
-      port: '', // Empty for production
+      port: 0, // 0 for production (no port needed)
       model: 'midnight-mcp-treasury'
     };
   }
