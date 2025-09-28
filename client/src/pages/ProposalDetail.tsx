@@ -68,28 +68,33 @@ const ProposalDetail: React.FC = () => {
         }
         
         // Find an existing proposal ID that actually exists on blockchain
-        // Use a simple round-robin approach to distribute proposals across existing IDs
+        // Check which proposals actually exist on the blockchain
         const existingProposalIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]; // Known existing proposals
         let selectedProposalId = null;
+        const availableProposals = [];
         
         // Check which existing proposals are available
         for (const proposalId of existingProposalIds) {
           const exists = await votingService.proposalExists(proposalId.toString());
+          console.log(`🔍 Checking proposal ${proposalId}: ${exists ? 'EXISTS' : 'NOT FOUND'}`);
           if (exists) {
-            // Use a simple hash of the database ID to select which blockchain ID to use
-            const hash = (id || '').split('').reduce((a, b) => {
-              a = ((a << 5) - a) + b.charCodeAt(0);
-              return a & a;
-            }, 0);
-            const index = Math.abs(hash) % existingProposalIds.length;
-            selectedProposalId = existingProposalIds[index];
-            break;
+            availableProposals.push(proposalId);
           }
         }
         
-        if (!selectedProposalId) {
+        console.log(`📋 Available proposals on blockchain: ${availableProposals.join(', ')}`);
+        
+        if (availableProposals.length === 0) {
           throw new Error('No existing proposals found on blockchain');
         }
+        
+        // Use a simple hash of the database ID to select which blockchain ID to use
+        const hash = (id || '').split('').reduce((a, b) => {
+          a = ((a << 5) - a) + b.charCodeAt(0);
+          return a & a;
+        }, 0);
+        const index = Math.abs(hash) % availableProposals.length;
+        selectedProposalId = availableProposals[index];
         
         setActualProposalId(selectedProposalId.toString());
         
