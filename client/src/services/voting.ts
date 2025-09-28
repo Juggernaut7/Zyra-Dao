@@ -280,6 +280,7 @@ class VotingService {
     revealEndTime: number;
     isActive: boolean;
     isExecuted: boolean;
+    phase: 'commit' | 'reveal' | 'ended';
   }> {
     if (!this.votingContract) {
       throw new Error('Voting contract not available');
@@ -291,13 +292,26 @@ class VotingService {
       const [_title, _description, _proposer, _amountRequested, _commitStartTime, _commitEndTime, _revealStartTime, _revealEndTime, _executed, _exists] = proposal;
       
       const now = Math.floor(Date.now() / 1000);
-      const isActive = now < Number(_revealEndTime);
+      const commitEndTime = Number(_commitEndTime);
+      const revealEndTime = Number(_revealEndTime);
+      const isActive = now < revealEndTime;
+      
+      // Determine the current phase
+      let phase: 'commit' | 'reveal' | 'ended';
+      if (now < commitEndTime) {
+        phase = 'commit';
+      } else if (now < revealEndTime) {
+        phase = 'reveal';
+      } else {
+        phase = 'ended';
+      }
 
       return {
-        commitEndTime: Number(_commitEndTime) * 1000, // Convert to milliseconds
-        revealEndTime: Number(_revealEndTime) * 1000, // Convert to milliseconds
+        commitEndTime: commitEndTime * 1000, // Convert to milliseconds
+        revealEndTime: revealEndTime * 1000, // Convert to milliseconds
         isActive,
         isExecuted: _executed,
+        phase,
       };
     } catch (error) {
       console.error('Failed to get proposal status:', error);
