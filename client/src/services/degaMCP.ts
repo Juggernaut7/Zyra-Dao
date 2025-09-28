@@ -41,8 +41,8 @@ class DEGAMCPService {
 
   constructor() {
     this.config = {
-      baseUrl: 'https://zyra-mcp-server.onrender.com', // Production MCP server
-      port: '', // Empty for production
+      baseUrl: 'http://localhost', // Local MCP server for demo
+      port: 3000, // Local port
       model: 'midnight-mcp-treasury'
     };
   }
