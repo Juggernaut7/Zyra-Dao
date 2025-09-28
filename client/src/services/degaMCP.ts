@@ -41,8 +41,8 @@ class DEGAMCPService {
 
   constructor() {
     this.config = {
-      baseUrl: 'http://localhost', // Local MCP server for demo
-      port: 3000, // Local port
+      baseUrl: 'https://mcp-server-2t0r.onrender.com', // Production MCP server
+      port: '', // Empty for production
       model: 'midnight-mcp-treasury'
     };
   }
