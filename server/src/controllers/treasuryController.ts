@@ -10,7 +10,10 @@ import { logger } from '../utils/logger.ts';
  */
 export const getTreasuryBalance = async (req: AuthenticatedRequest, res: Response) => {
   try {
+    console.log('📊 Calculating treasury balance...');
     const balance = await TreasuryTransaction.getTreasuryBalance();
+    console.log('💰 Calculated balance:', balance);
+    console.log('💰 Balance details - Deposits:', balance.totalDeposits, 'Withdrawals:', balance.totalWithdrawals, 'Final Balance:', balance.balance);
 
     // Get recent transactions
     const recentTransactions = await TreasuryTransaction.find({})
@@ -150,6 +153,8 @@ export const createTreasuryTransaction = async (req: AuthenticatedRequest, res: 
       proposalId
     } = req.body;
 
+    console.log('💾 Creating treasury transaction:', { type, amount, from, to, description });
+    
     const transaction = new TreasuryTransaction({
       type,
       amount,
@@ -157,10 +162,32 @@ export const createTreasuryTransaction = async (req: AuthenticatedRequest, res: 
       to,
       description,
       proposalId,
-      status: 'pending'
+      status: 'completed' // Set to completed so it's included in balance calculation
     });
 
     await transaction.save();
+    console.log('✅ Transaction saved with ID:', transaction._id);
+    console.log('💾 Transaction details:', {
+      type: transaction.type,
+      amount: transaction.amount,
+      status: transaction.status,
+      from: transaction.from,
+      to: transaction.to,
+      description: transaction.description
+    });
+
+    // Verify the transaction was saved by querying it back
+    const savedTransaction = await TreasuryTransaction.findById(transaction._id);
+    console.log('🔍 Verification - Transaction found in DB:', savedTransaction ? 'YES' : 'NO');
+    if (savedTransaction) {
+      console.log('🔍 Verification - Transaction status:', savedTransaction.status);
+      console.log('🔍 Verification - Transaction type:', savedTransaction.type);
+      console.log('🔍 Verification - Transaction amount:', savedTransaction.amount);
+    }
+
+    // Check the balance immediately after saving the transaction
+    const currentBalance = await TreasuryTransaction.getTreasuryBalance();
+    console.log('💰 Current balance after transaction:', currentBalance);
 
     logger.info(`New treasury transaction created by ${user.walletAddress}: ${transaction._id}`);
 

@@ -231,7 +231,8 @@ const Treasury: React.FC = () => {
             onClick={async () => {
               if (midnightEnabled) {
                 try {
-                  await executePrivateTransaction({
+                  console.log('💰 Executing private allocation transaction...');
+                  const result = await executePrivateTransaction({
                     type: 'transfer',
                     amount: 10000,
                     recipient: '0x1234567890123456789012345678901234567890',
@@ -239,12 +240,18 @@ const Treasury: React.FC = () => {
                     private: true
                   });
                   
+                  console.log('✅ Private allocation transaction result:', result);
+                  
                   // Show success message
                   toast.success('Private allocation completed! Treasury updated.');
                   
                   // Wait a moment for database to update, then refresh treasury data
+                  console.log('⏳ Waiting for database to update...');
                   await new Promise(resolve => setTimeout(resolve, 1500));
+                  
+                  console.log('🔄 Refreshing treasury data...');
                   await handleRefresh();
+                  console.log('✅ Treasury data refreshed');
                 } catch (error) {
                   console.error('Private transaction failed:', error);
                 }

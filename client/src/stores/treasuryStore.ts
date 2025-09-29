@@ -80,9 +80,12 @@ export const useTreasuryStore = create<TreasuryState>((set, get) => ({
       fetchTreasurySummary: async () => {
         set({ loading: true, error: null });
         try {
+          console.log('📊 Fetching treasury summary from API...');
           const response = await api.treasury.getSummary();
           const data = response.data.data;
-          console.log('Treasury balance response:', data);
+          console.log('💰 Treasury balance response:', data);
+          console.log('💰 Current balance:', data.balance);
+          console.log('💰 Balance breakdown - Deposits:', data.totalDeposits, 'Withdrawals:', data.totalWithdrawals, 'Final Balance:', data.balance);
           
           // Convert backend response to frontend format
           const totalValue = data.balance || 0;
@@ -248,19 +251,35 @@ export const useTreasuryStore = create<TreasuryState>((set, get) => ({
           blockNumber: Math.floor(Math.random() * 1000000) + 1000000
         };
         
+        console.log('💾 Creating transaction with details:', {
+          type: transaction.type,
+          amount: transaction.amount,
+          from: transaction.from,
+          to: transaction.to,
+          status: transaction.status
+        });
+        
         // Add to treasury transactions
+        console.log('💾 Saving transaction to database:', transaction);
         await api.treasury.createTransaction(transaction);
+        console.log('✅ Transaction saved to database');
         
         // Send update via Communication MCP
+        console.log('📡 Sending update via Communication MCP...');
         await communicationMCP.sendTreasuryUpdate({
           type: 'transaction',
           data: action,
           message: `Private ${action.type} transaction executed successfully`
         });
+        console.log('✅ Communication MCP update sent');
         
         // Wait a moment for database to update, then refresh treasury data
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        console.log('⏳ Waiting for database to update...');
+        await new Promise(resolve => setTimeout(resolve, 2000)); // Increased delay to 2 seconds
+        
+        console.log('🔄 Refreshing treasury summary...');
         await get().fetchTreasurySummary();
+        console.log('✅ Treasury summary refreshed');
       }
       
       set({ loading: false });

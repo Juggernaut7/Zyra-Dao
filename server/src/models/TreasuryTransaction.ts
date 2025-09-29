@@ -103,6 +103,8 @@ TreasuryTransactionSchema.statics.findByProposal = function(proposalId: string) 
 };
 
 TreasuryTransactionSchema.statics.getTreasuryBalance = async function() {
+  console.log('🔍 Calculating treasury balance...');
+  
   const balance = await this.aggregate([
     { $match: { status: 'completed' } },
     {
@@ -121,7 +123,19 @@ TreasuryTransactionSchema.statics.getTreasuryBalance = async function() {
     }
   ]);
   
-  return balance[0] || { balance: 0, totalDeposits: 0, totalWithdrawals: 0 };
+  const result = balance[0] || { balance: 0, totalDeposits: 0, totalWithdrawals: 0 };
+  console.log('💰 Treasury balance calculation result:', result);
+  
+  // Debug: Get all completed transactions
+  const allTransactions = await this.find({ status: 'completed' }).sort({ createdAt: -1 });
+  console.log('📊 All completed transactions:', allTransactions.map(tx => ({
+    type: tx.type,
+    amount: tx.amount,
+    description: tx.description,
+    createdAt: tx.createdAt
+  })));
+  
+  return result;
 };
 
 export default mongoose.model<ITreasuryTransaction>('TreasuryTransaction', TreasuryTransactionSchema);

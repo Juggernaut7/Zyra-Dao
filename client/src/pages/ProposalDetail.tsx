@@ -72,7 +72,7 @@ const ProposalDetail: React.FC = () => {
         
         try {
           // Create the proposal on the blockchain
-          const result = await votingService.createProposal(
+            const result = await votingService.createProposal(
             proposal.title || 'Untitled Proposal',
             proposal.description || 'No description provided',
             (proposal.amount || 0).toString(),
@@ -81,8 +81,8 @@ const ProposalDetail: React.FC = () => {
           );
           
           console.log(`✅ Created blockchain proposal ${result.proposalId} with tx ${result.txHash}`);
-          setActualProposalId(result.proposalId.toString());
-          
+            setActualProposalId(result.proposalId.toString());
+            
           // Add mapping to the proposal mapping service
           proposalMappingService.addMapping(
             id || 'unknown', 
