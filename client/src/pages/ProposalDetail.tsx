@@ -67,30 +67,42 @@ const ProposalDetail: React.FC = () => {
           return;
         }
         
-        // For demo purposes, we'll use a demo mode approach
-        // Since we only have proposal 1 on the blockchain, we'll create a demo mode
-        // that simulates the voting experience without requiring real blockchain interaction
+        // Create a real blockchain proposal for this database proposal
+        console.log('🚀 Creating real blockchain proposal for database proposal', id);
         
-        // Use a hash of the database ID to create a consistent but unique blockchain ID
-        const hash = (id || '').split('').reduce((a, b) => {
-          a = ((a << 5) - a) + b.charCodeAt(0);
-          return a & a;
-        }, 0);
-        
-        // For demo mode, use a special prefix to indicate it's a demo proposal
-        // This way we can handle it differently in the voting logic
-        const blockchainId = `demo_${Math.abs(hash) % 1000}`;
-        
-        console.log(`🎯 Created demo blockchain ID ${blockchainId} for database proposal ${id}`);
-        
-        setActualProposalId(blockchainId);
-        
-        // Add mapping to the proposal mapping service
-        proposalMappingService.addMapping(
-          id || 'unknown', 
-          blockchainId.toString(), 
-          proposal.title || 'Proposal'
-        );
+        try {
+          // Create the proposal on the blockchain
+          const result = await votingService.createProposal(
+            proposal.title || 'Untitled Proposal',
+            proposal.description || 'No description provided',
+            (proposal.amount || 0).toString(),
+            86400, // 24 hours commit phase
+            86400  // 24 hours reveal phase
+          );
+          
+          console.log(`✅ Created blockchain proposal ${result.proposalId} with tx ${result.txHash}`);
+          setActualProposalId(result.proposalId.toString());
+          
+          // Add mapping to the proposal mapping service
+          proposalMappingService.addMapping(
+            id || 'unknown', 
+            result.proposalId.toString(), 
+            proposal.title || 'Proposal'
+          );
+          
+        } catch (error) {
+          console.error('❌ Failed to create blockchain proposal:', error);
+          // Fallback to using existing proposal 1 for demo purposes
+          console.log('🔄 Falling back to existing proposal 1 for demo');
+          setActualProposalId('1');
+          
+          // Add mapping to the proposal mapping service
+          proposalMappingService.addMapping(
+            id || 'unknown', 
+            '1', 
+            proposal.title || 'Proposal'
+          );
+        }
       } catch (error) {
         console.error('❌ Failed to initialize wallet:', error);
         // Show user-friendly error message
@@ -297,24 +309,6 @@ const ProposalDetail: React.FC = () => {
       }
       
       try {
-        // Check if this is a demo proposal
-        if (blockchainProposalId.startsWith('demo_')) {
-          // Handle demo proposal - simulate vote data
-          console.log('🎭 Demo mode: Simulating vote data for proposal', blockchainProposalId);
-          
-          // Simulate demo vote data
-          setVoteData(prev => ({
-            ...prev,
-            yesVotes: Math.floor(Math.random() * 50) + 10, // Random between 10-60
-            noVotes: Math.floor(Math.random() * 30) + 5,   // Random between 5-35
-            totalVoters: 100,
-            committedVotes: Math.floor(Math.random() * 80) + 20, // Random between 20-100
-            revealedVotes: Math.floor(Math.random() * 60) + 15,  // Random between 15-75
-            hasCommitted: false, // User hasn't committed yet in demo
-            hasRevealed: false,  // User hasn't revealed yet in demo
-          }));
-          return;
-        }
         
         // Check if wallet is connected first
         const isConnected = await votingService.isWalletConnected();

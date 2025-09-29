@@ -112,20 +112,6 @@ const VotingWidget: React.FC<VotingWidgetProps> = ({
         throw new Error('Invalid proposal ID');
       }
       
-      // Check if this is a demo proposal
-      if (proposalId.startsWith('demo_')) {
-        // Handle demo proposal - simulate voting without blockchain interaction
-        console.log('🎭 Demo mode: Simulating vote commit for proposal', proposalId);
-        
-        // Simulate a successful vote commit
-        setTxHash(`demo_tx_${Date.now()}`);
-        toast.success('Demo vote committed successfully! 🗳️ (Demo Mode)', {
-          icon: '✅',
-          duration: 4000,
-        });
-        onVoteUpdate?.();
-        return;
-      }
       
       // Verify proposal exists before attempting to vote
       const exists = await votingService.proposalExists(proposalId);
@@ -194,20 +180,6 @@ const VotingWidget: React.FC<VotingWidgetProps> = ({
         throw new Error('Invalid proposal ID');
       }
       
-      // Check if this is a demo proposal
-      if (proposalId.startsWith('demo_')) {
-        // Handle demo proposal - simulate vote reveal without blockchain interaction
-        console.log('🎭 Demo mode: Simulating vote reveal for proposal', proposalId);
-        
-        // Simulate a successful vote reveal
-        setTxHash(`demo_reveal_tx_${Date.now()}`);
-        toast.success('Demo vote revealed successfully! 🔓 (Demo Mode)', {
-          icon: '🎉',
-          duration: 4000,
-        });
-        onVoteUpdate?.();
-        return;
-      }
       
       // Verify proposal exists before attempting to reveal
       const exists = await votingService.proposalExists(proposalId);
